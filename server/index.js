@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import authRouter from './router/auth.js';
 import loginRouter from './router/login.js';
 import festaRouter from './router/festa.js';
+import placeRouter from './router/place.js';
 import { config } from './config.js';
 import { sequelize } from './db/database.js';
 
@@ -16,6 +17,7 @@ app.use(morgan('tiny'));
 app.use('/auth', authRouter);
 app.use('/login', loginRouter);
 app.use('/festa', festaRouter);
+app.use('/place', placeRouter);
 
 app.use((req, res, next) => {
   res.sendStatus(404);

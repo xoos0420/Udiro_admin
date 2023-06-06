@@ -113,7 +113,7 @@ function mkbox(data, index) {
 							onclick="showConfirmation(${data.festa_NUM})"
 							>삭제
 							</button>
-							<button type="button" class="btn btn-primary" onclick='updateFesta(${data.TITLE})'>
+							<button type="button" class="btn btn-primary" onclick='updateFesta(${data.festa_NUM})'>
 							수정
 							</button>
 								<button type="button" class="btn btn-secondary"

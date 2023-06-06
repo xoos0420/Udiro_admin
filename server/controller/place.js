@@ -1,7 +1,7 @@
-import * as festaRepository from '../data/festa.js';
+import * as placeRepository from '../data/place.js';
 
 // 생성
-export async function CreateFesta(req, res, next) {
+export async function Createplace(req, res, next) {
   const { title, addr, guname, date, use_trgt, codename, main_img, org_link } =
     req.body;
 
@@ -34,14 +34,14 @@ export async function updateFesta(req, res, next) {
 }
 
 // 삭제
-export async function deleteFesta(req, res, next) {
-  const festa_NUM = req.params.festa_NUM;
-  const culture = await festaRepository.getByPK(festa_NUM);
+export async function deletePlace(req, res, next) {
+  const place_NUM = req.params.place_NUM;
+  const culture = await placeRepository.getByPK(place_NUM);
   if (!culture) {
     res
       .status(404)
-      .json({ message: `delete : festa_NUM(${festa_NUM}) not found` });
+      .json({ message: `delete : place_NUM(${place_NUM}) not found` });
   }
-  await festaRepository.remove(festa_NUM);
+  await placeRepository.remove(place_NUM);
   res.sendStatus(204);
 }

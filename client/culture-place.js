@@ -1,28 +1,28 @@
 function fetchDataPlace() {
-	fetch(
-		'https://port-0-udiroserver-7e6o2cli3ac97a.sel4.cloudtype.app/culture/place',
-		{
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}
-	)
-		.then((response) => response.json())
-		.then((data) => {
-			for (let i = 0; i < 10; i++) {
-				mkbox(data[i], i);
-			}
-		})
-		.catch((error) => {
-			console.error('ERROR', error);
-		});
+  fetch(
+    'https://port-0-udiroserver-7e6o2cli3ac97a.sel4.cloudtype.app/culture/place',
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      for (let i = 0; i < 10; i++) {
+        mkbox(data[i], i);
+      }
+    })
+    .catch((error) => {
+      console.error('ERROR', error);
+    });
 }
 
 function mkbox(data, index) {
-	const modalId = `bd-example-modal-lg-${index}`;
-	const tbody = document.querySelector('#mktbody')
-	tbody.innerHTML += `<td class="table-plus">
+  const modalId = `bd-example-modal-lg-${index}`;
+  const tbody = document.querySelector('#mktbody');
+  tbody.innerHTML += `<td class="table-plus">
 			<div class="name-avatar d-flex align-items-center">
 				<div class="txt" style="text-align:center;">
 					<div class="weight-600">${data.place_NUM}</div>
@@ -97,15 +97,16 @@ function mkbox(data, index) {
 								</table>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">
 									Close
 								</button>
-								<button type="button" class="btn btn-primary">
-									수정
-								</button>
-								<button type="button" class="btn btn-primary">
-									삭제
+								<button
+								type="button"
+								class="btn btn-secondary"
+								style="background-color: red; border: 1px solid red;"
+								data-dismiss="modal"
+								onclick="showConfirmation(${data.place_NUM})"
+								>삭제
 								</button>
 							</div>
 						</div>
@@ -116,3 +117,27 @@ function mkbox(data, index) {
 }
 
 fetchDataPlace();
+
+async function deletePlace(place_NUM) {
+  await fetch(`http://localhost:9090/place/${place_NUM}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          console.log(data);
+          alert(data);
+          window.location.reload();
+        });
+      } else {
+        alert('place 삭제 실패!');
+      }
+    })
+    .catch(function (error) {
+      console.error(error);
+      alert('place! 삭제 실패!');
+    });
+}
